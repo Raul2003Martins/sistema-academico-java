@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS aluno(
 	rgm INTEGER PRIMARY KEY,
 	nome VARCHAR(50),
 	email VARCHAR(50),
-	cpf VARCHAR(10),
+	cpf VARCHAR(11),
 	endereco VARCHAR(50),
 	município VARCHAR(50),
 	uf VARCHAR(2),
@@ -29,3 +29,4 @@ CREATE TABLE IF NOT EXISTS disciplina(
 	CONSTRAINT fk_aluno FOREIGN KEY(rgm_aluno) REFERENCES aluno(rgm),
 	CONSTRAINT fk_curso FOREIGN KEY(codigo_curso) REFERENCES curso(codigo)
 );
+alter table aluno rename column município to municipio;
