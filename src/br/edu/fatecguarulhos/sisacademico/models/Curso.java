@@ -3,9 +3,12 @@ package br.edu.fatecguarulhos.sisacademico.models;
 public class Curso {
 	
 
-
-	int codigo,rgm_aluno,codigo_curso;
-	String nome,campus,turno;
+	//Declaração de Atributos
+	private int codigo;
+	private String nome,campus,turno;
+	
+	//Inicialização do Construtor
+	public Curso(int codigo, String nome, String campus, String turno) {
 
 	public Curso(int codigo, int rgm_aluno, int codigo_curso, String nome, String campus, String turno) {
 		super();
@@ -16,7 +19,6 @@ public class Curso {
 		this.campus = campus;
 		this.turno = turno;
 	}
-
 	public int getCodigo() {
 		return codigo;
 	}
@@ -60,11 +62,9 @@ public class Curso {
 	public String getTurno() {
 		return turno;
 	}
-
 	public void setTurno(String turno) {
 		this.turno = turno;
 	}
-	
 
 
 }
