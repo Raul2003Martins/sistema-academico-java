@@ -5,6 +5,21 @@ public class Disciplina {
 	private Aluno aluno;
 	private Curso curso;
 	private int codigo,faltas;
+	public Aluno getAluno() {
+		return aluno;
+	}
+
+	public void setAluno(Aluno aluno) {
+		this.aluno = aluno;
+	}
+
+	public Curso getCurso() {
+		return curso;
+	}
+
+	public void setCurso(Curso curso) {
+		this.curso = curso;
+	}
 	private String nome,semestre;
 	private float nota;
 	
@@ -18,6 +33,10 @@ public class Disciplina {
 		this.nota = nota;
 	}
 	
+	public Disciplina() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getCodigo() {
 		return codigo;
 	}
