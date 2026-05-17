@@ -14,6 +14,10 @@ public class Curso {
 	//Inicialização do Construtor
 	public Curso(int codigo, String nome, String campus, String turno) {
 		super();
+	}
+	public Curso() {}
+
+	public Curso(int codigo, String nome, String campus, String turno) {
 		this.codigo = codigo;
 		this.nome = nome;
 		this.campus = campus;
