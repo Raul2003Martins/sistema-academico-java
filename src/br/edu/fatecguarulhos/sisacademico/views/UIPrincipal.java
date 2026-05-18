@@ -7,6 +7,13 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
+
+import br.edu.fatecguarulhos.sisacademico.daos.AlunoDAO;
+import br.edu.fatecguarulhos.sisacademico.daos.CursoDAO;
+import br.edu.fatecguarulhos.sisacademico.daos.DisciplinaDAO;
+import br.edu.fatecguarulhos.sisacademico.models.Aluno;
+import br.edu.fatecguarulhos.sisacademico.models.Disciplina;
+
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -398,112 +405,132 @@ public class UIPrincipal extends JFrame {
 		tabbedPane.addTab("Notas e Faltas", null, panelNotaseFalta, null);
 		panelNotaseFalta.setLayout(null);
 		
-				JLabel lblRGM = new JLabel("RGM:");
-				lblRGM.setFont(new Font("Tahoma", Font.PLAIN, 23));
-				lblRGM.setBounds(10, 15, 60, 40);
-				panelNotaseFalta.add(lblRGM);
+		JLabel lblRGM = new JLabel("RGM:");
+		lblRGM.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		lblRGM.setBounds(10, 15, 60, 40);
+		panelNotaseFalta.add(lblRGM);
 				
-						txtRgm2 = new JTextField();
-						txtRgm2.setFont(new Font("Tahoma", Font.PLAIN, 23));
-						txtRgm2.setBounds(69, 15, 195, 40);
-						panelNotaseFalta.add(txtRgm2);
+		txtRgm2 = new JTextField();
+		txtRgm2.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		txtRgm2.setBounds(69, 15, 195, 40);
+		panelNotaseFalta.add(txtRgm2);
 						
-								JLabel lblDisciplina = new JLabel("Disciplina:");
-								lblDisciplina.setFont(new Font("Tahoma", Font.PLAIN, 23));
-								lblDisciplina.setBounds(12, 146, 121, 40);
-								panelNotaseFalta.add(lblDisciplina);
+		JLabel lblDisciplina = new JLabel("Disciplina:");
+		lblDisciplina.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		lblDisciplina.setBounds(12, 146, 121, 40);
+		panelNotaseFalta.add(lblDisciplina);
 								
-										JComboBox comboDisciplina = new JComboBox();
-										comboDisciplina.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		JComboBox comboDisciplina = new JComboBox();
+		comboDisciplina.setFont(new Font("Tahoma", Font.PLAIN, 23));
 										
-												comboDisciplina.setModel(
-														new DefaultComboBoxModel(
-																new String[] {
-																		"Programação Orientada a Objetos",
-																		"Banco de Dados",
-																		"Engenharia de Software"
-																}));
+		comboDisciplina.setModel(
+					new DefaultComboBoxModel(
+							new String[] {
+									"Programação Orientada a Objetos",
+									"Banco de Dados",
+									"Engenharia de Software"
+							}));
 												
-														comboDisciplina.setBounds(128, 146, 490, 40);
-														panelNotaseFalta.add(comboDisciplina);
+		comboDisciplina.setBounds(128, 146, 490, 40);
+		panelNotaseFalta.add(comboDisciplina);
 														
 														
-																JLabel lblSemestre = new JLabel("Semestre:");
-																lblSemestre.setFont(new Font("Tahoma", Font.PLAIN, 23));
-																lblSemestre.setBounds(10, 215, 110, 40);
-																panelNotaseFalta.add(lblSemestre);
+		JLabel lblSemestre = new JLabel("Semestre:");
+		lblSemestre.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		lblSemestre.setBounds(10, 215, 110, 40);
+		panelNotaseFalta.add(lblSemestre);
 																
-																		JComboBox comboSemestre_1 = new JComboBox();
-																		comboSemestre_1.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		JComboBox comboSemestre_1 = new JComboBox();
+		comboSemestre_1.setFont(new Font("Tahoma", Font.PLAIN, 23));
 																		
-																				comboSemestre_1.setModel(
-																						new DefaultComboBoxModel(
-																								new String[] {
-																										"2026-1",
-																										"2026-2"
-																								}));
+		comboSemestre_1.setModel(
+			new DefaultComboBoxModel(
+				new String[] {
+					"2026-1",
+					"2026-2"
+					}));
 																				
-																						comboSemestre_1.setBounds(115, 215, 100, 40);
-																						panelNotaseFalta.add(comboSemestre_1);
+		comboSemestre_1.setBounds(115, 215, 100, 40);
+		panelNotaseFalta.add(comboSemestre_1);
 																						
 																								
-																								JLabel lblNota = new JLabel("Nota:");
-																								lblNota.setFont(new Font("Tahoma", Font.PLAIN, 23));
-																								lblNota.setBounds(267, 215, 60, 40);
-																								panelNotaseFalta.add(lblNota);
+		JLabel lblNota = new JLabel("Nota:");
+		lblNota.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		lblNota.setBounds(267, 215, 60, 40);
+		panelNotaseFalta.add(lblNota);
 																										
-																												JLabel lblFaltas = new JLabel("Faltas:");
-																												lblFaltas.setFont(new Font("Tahoma", Font.PLAIN, 23));
-																												lblFaltas.setBounds(478, 215, 70, 40);
-																												panelNotaseFalta.add(lblFaltas);
-																												
-																														txtFaltas = new JTextField();
-																														txtFaltas.setHorizontalAlignment(SwingConstants.CENTER);
-																														txtFaltas.setFont(new Font("Tahoma", Font.PLAIN, 23));
-																														txtFaltas.setText("2");
-																														txtFaltas.setBounds(558, 215, 60, 40);
-																														panelNotaseFalta.add(txtFaltas);
-																														
-																																
-																																btnNovo.setBounds(10, 280, 70, 60);
-																																panelNotaseFalta.add(btnNovo);
-																																
-																																		
-																																		btnGravar.setBounds(140, 280, 70, 60);
-																																		panelNotaseFalta.add(btnGravar);
-																																		
-																																				JButton btnPesquisar1 = new JButton("");
-																																				btnPesquisar1.setBounds(279, 280, 70, 60);
-																																				panelNotaseFalta.add(btnPesquisar1);
-																																				
-																																						JButton btnJava1 = new JButton("");
-																																						btnJava1.addActionListener(new ActionListener() {
-																																							public void actionPerformed(ActionEvent e) {
-																																							}
-																																						});
-																																						btnJava1.setBounds(414, 280, 70, 60);
-																																						panelNotaseFalta.add(btnJava1);
-																																						
-																																								JButton btnSair2_1 = new JButton("");
-																																								btnSair2_1.setBounds(548, 280, 70, 60);
-																																								panelNotaseFalta.add(btnSair2_1);
-																																								
-																																								txtCurso2 = new JTextField();
-																																								txtCurso2.setEditable(false);
-																																								txtCurso2.setFont(new Font("Tahoma", Font.PLAIN, 23));
-																																								txtCurso2.setBounds(10, 80, 608, 40);
-																																								panelNotaseFalta.add(txtCurso2);
-																																								
-																																								txtNome2 = new JTextField();
-																																								txtNome2.setEditable(false);
-																																								txtNome2.setFont(new Font("Tahoma", Font.PLAIN, 23));
-																																								txtNome2.setBounds(288, 15, 330, 40);
-																																								panelNotaseFalta.add(txtNome2);
-																																								
-																																								txtNota = new JTextField();
-																																								txtNota.setFont(new Font("Tahoma", Font.PLAIN, 23));
-																																								txtNota.setBounds(333, 215, 60, 40);
-																																								panelNotaseFalta.add(txtNota);
+		JLabel lblFaltas = new JLabel("Faltas:");
+		lblFaltas.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		lblFaltas.setBounds(478, 215, 70, 40);
+		panelNotaseFalta.add(lblFaltas);
+		
+		txtFaltas = new JTextField();
+		txtFaltas.setHorizontalAlignment(SwingConstants.CENTER);
+		txtFaltas.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		txtFaltas.setText("2");
+		txtFaltas.setBounds(558, 215, 60, 40);
+		panelNotaseFalta.add(txtFaltas);
+		btnNovo.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			try {
+				AlunoDAO alunoDao = new AlunoDAO();
+				Aluno a = alunoDao.buscarAluno(Integer.parseInt(txtRgm2.getText()));
+				CursoDAO cursoDao = new CursoDAO();
+				//Curso c = cursoDao.buscarCurso();
+			} catch (Exception exception) {
+				System.out.println("ERRO: " + exception.getMessage());
+			}
+			//DisciplinaDAO disciplinaDao = new DisciplinaDAO();
+			//Disciplina disciplina = new Disciplina();
+			//disciplina.setCodigo(0);
+		//	disciplinaDao.inserirDisciplina(null);
+		
+		}
+		});
+		
+		
+		btnNovo.setBounds(10, 280, 70, 60);
+		panelNotaseFalta.add(btnNovo);
+		
+		
+		btnGravar.setBounds(140, 280, 70, 60);
+		panelNotaseFalta.add(btnGravar);
+		
+																																			JButton btnPesquisar1 = new JButton("");
+		btnPesquisar1.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+																																				}
+		});
+		btnPesquisar1.setBounds(279, 280, 70, 60);
+		panelNotaseFalta.add(btnPesquisar1);
+		
+		JButton btnJava1 = new JButton("");
+		btnJava1.addActionListener(new ActionListener() {
+																																						public void actionPerformed(ActionEvent e) {
+		}
+		});
+		btnJava1.setBounds(414, 280, 70, 60);
+																																					panelNotaseFalta.add(btnJava1);
+																																					
+		JButton btnSair2_1 = new JButton("");
+																																							btnSair2_1.setBounds(548, 280, 70, 60);
+		panelNotaseFalta.add(btnSair2_1);
+		txtCurso2 = new JTextField();
+		txtCurso2.setEditable(false);
+		txtCurso2.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		txtCurso2.setBounds(10, 80, 608, 40);
+		panelNotaseFalta.add(txtCurso2);
+		
+		txtNome2 = new JTextField();
+		txtNome2.setEditable(false);
+		txtNome2.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		txtNome2.setBounds(288, 15, 330, 40);
+		panelNotaseFalta.add(txtNome2);
+		
+		txtNota = new JTextField();
+		txtNota.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		txtNota.setBounds(333, 215, 60, 40);
+		panelNotaseFalta.add(txtNota);
 		
 		JPanel panelBoletim = new JPanel();
 		panelBoletim.setLayout(null);
