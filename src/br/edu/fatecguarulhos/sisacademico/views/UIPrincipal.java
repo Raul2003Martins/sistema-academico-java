@@ -24,7 +24,7 @@ import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.Choice;
-
+import java.awt.Component;
 
 import javax.swing.JFormattedTextField;
 import javax.swing.JButton;
@@ -66,6 +66,8 @@ public class UIPrincipal extends JFrame {
 	private JTextField txtNome2;
 	private JTextField txtNota;
 
+	
+	private JTabbedPane tabbedPane ;
 	/**
 	 * Launch the application.
 	 */
@@ -98,6 +100,22 @@ public class UIPrincipal extends JFrame {
 		
 		JMenuItem mntmSalvar = new JMenuItem("Salvar");
 		mntmSalvar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK | InputEvent.ALT_DOWN_MASK));
+		mntmSalvar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int selected = tabbedPane.getSelectedIndex();
+				if(selected == 0) {
+					System.out.println("tela pessoal");					
+				}
+				if(selected == 1)
+					System.out.println("tela2 curso");
+				if(selected == 2)
+					System.out.println("tela3 falta");
+				if(selected == 3)
+					System.out.println("tela4 boletim");
+			}
+		});
 		mnArquivo.add(mntmSalvar);
 		
 		JMenuItem mntmConsultar = new JMenuItem("Consultar");
@@ -148,7 +166,7 @@ public class UIPrincipal extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(20, 21, 759, 395);
 		contentPane.add(tabbedPane);
 		
