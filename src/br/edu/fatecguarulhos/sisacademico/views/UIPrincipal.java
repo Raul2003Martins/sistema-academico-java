@@ -54,17 +54,19 @@ public class UIPrincipal extends JFrame {
 	private JComboBox comboSemestre;
 	private JComboBox comboNota;
 
-	private JButton btnNovo = new JButton("");
-	private JButton btnGravar = new JButton("");
+	private JButton btnSair2 = new JButton("");
+	private JButton btnSalvar2 = new JButton("");
 	private JButton btnPesquisar;
 	private JButton btnJava;
-	private JButton btnSair2;
+	
 
 	private JLabel lblNomeAluno;
 	private JLabel lblCursoAluno;
 	private JTextField txtCurso2;
 	private JTextField txtNome2;
 	private JTextField txtNota;
+	private JButton btnAtualizar2;
+	
 
 	/**
 	 * Launch the application.
@@ -301,42 +303,46 @@ public class UIPrincipal extends JFrame {
 		comboBoxCurso.setBounds(97, 15, 543, 40);
 		panelDadosC.add(comboBoxCurso);
 		
-		JButton btnNovo2 = new JButton("");
-		btnNovo2.addActionListener(new ActionListener() {
+		JButton btnSalvar = new JButton("");
+		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNovo2.setBounds(10, 222, 77, 66);
-		panelDadosC.add(btnNovo2);
-		btnNovo2.setIcon(new ImageIcon(UIPrincipal.class.getResource("/resources/save.png")));
+		btnSalvar.setBounds(563, 222, 77, 66);
+		panelDadosC.add(btnSalvar);
+		btnSalvar.setIcon(new ImageIcon(UIPrincipal.class.getResource("/resources/save.png")));
 		
 		JComboBox comboBoxCampus = new JComboBox();
 		comboBoxCampus.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		comboBoxCampus.setBounds(114, 80, 526, 40);
 		panelDadosC.add(comboBoxCampus);
 		
-		JButton btnSalvar = new JButton("");
-		btnSalvar.addActionListener(new ActionListener() {
+		JButton btnBuscar = new JButton("");
+		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnSalvar.setIcon(new ImageIcon(UIPrincipal.class.getResource("/resources/save.png")));
-		btnSalvar.setBounds(143, 222, 77, 66);
-		panelDadosC.add(btnSalvar);
+		btnBuscar.setIcon(new ImageIcon(UIPrincipal.class.getResource("/resources/save.png")));
+		btnBuscar.setBounds(143, 222, 77, 66);
+		panelDadosC.add(btnBuscar);
 		
-		JButton btnPesquisar2 = new JButton("");
-		btnPesquisar2.setIcon(new ImageIcon(UIPrincipal.class.getResource("/resources/save.png")));
-		btnPesquisar2.setBounds(280, 222, 77, 66);
-		panelDadosC.add(btnPesquisar2);
+		JButton btnDeletar = new JButton("");
+		btnDeletar.setIcon(new ImageIcon(UIPrincipal.class.getResource("/resources/apagar.png")));
+		btnDeletar.setBounds(280, 222, 77, 66);
+		panelDadosC.add(btnDeletar);
 		
-		JButton btnJava2 = new JButton("");
-		btnJava2.setIcon(new ImageIcon(UIPrincipal.class.getResource("/resources/save.png")));
-		btnJava2.setBounds(414, 222, 77, 66);
-		panelDadosC.add(btnJava2);
+		JButton btnAtualizar = new JButton("");
+		btnAtualizar.setIcon(new ImageIcon(UIPrincipal.class.getResource("/resources/save.png")));
+		btnAtualizar.setBounds(414, 222, 77, 66);
+		panelDadosC.add(btnAtualizar);
 		
 		JButton btnSair = new JButton("");
-		btnSair.setIcon(new ImageIcon(UIPrincipal.class.getResource("/resources/save.png")));
-		btnSair.setBounds(563, 222, 77, 66);
+		btnSair.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnSair.setIcon(new ImageIcon(UIPrincipal.class.getResource("/resources/sair.png")));
+		btnSair.setBounds(10, 222, 77, 66);
 		panelDadosC.add(btnSair);
 		
 		JPanel panelNotaseFalta = new JPanel();
@@ -408,30 +414,30 @@ public class UIPrincipal extends JFrame {
 																														txtFaltas.setText("2");
 																														txtFaltas.setBounds(558, 215, 60, 40);
 																														panelNotaseFalta.add(txtFaltas);
+																																btnSair2.addActionListener(new ActionListener() {
+																																	public void actionPerformed(ActionEvent e) {
+																																	}
+																																});
 																														
 																																
-																																btnNovo.setBounds(10, 280, 70, 60);
-																																panelNotaseFalta.add(btnNovo);
+																																btnSair2.setBounds(10, 280, 80, 76);
+																																panelNotaseFalta.add(btnSair2);
 																																
 																																		
-																																		btnGravar.setBounds(140, 280, 70, 60);
-																																		panelNotaseFalta.add(btnGravar);
+																																		btnSalvar2.setBounds(548, 280, 80, 76);
+																																		panelNotaseFalta.add(btnSalvar2);
 																																		
-																																				JButton btnPesquisar1 = new JButton("");
-																																				btnPesquisar1.setBounds(279, 280, 70, 60);
-																																				panelNotaseFalta.add(btnPesquisar1);
+																																				JButton btnDeletar2 = new JButton("");
+																																				btnDeletar2.setBounds(279, 280, 80, 76);
+																																				panelNotaseFalta.add(btnDeletar2);
 																																				
-																																						JButton btnJava1 = new JButton("");
-																																						btnJava1.addActionListener(new ActionListener() {
+																																						btnAtualizar2 = new JButton("");
+																																						btnAtualizar2.addActionListener(new ActionListener() {
 																																							public void actionPerformed(ActionEvent e) {
 																																							}
 																																						});
-																																						btnJava1.setBounds(414, 280, 70, 60);
-																																						panelNotaseFalta.add(btnJava1);
-																																						
-																																								JButton btnSair2_1 = new JButton("");
-																																								btnSair2_1.setBounds(548, 280, 70, 60);
-																																								panelNotaseFalta.add(btnSair2_1);
+																																						btnAtualizar2.setBounds(414, 280, 80, 76);
+																																						panelNotaseFalta.add(btnAtualizar2);
 																																								
 																																								txtCurso2 = new JTextField();
 																																								txtCurso2.setEditable(false);
@@ -449,6 +455,10 @@ public class UIPrincipal extends JFrame {
 																																								txtNota.setFont(new Font("Tahoma", Font.PLAIN, 23));
 																																								txtNota.setBounds(333, 215, 60, 40);
 																																								panelNotaseFalta.add(txtNota);
+																																								
+																																								JButton btnBuscar2 = new JButton("");
+																																								btnBuscar2.setBounds(145, 280, 80, 76);
+																																								panelNotaseFalta.add(btnBuscar2);
 		
 		JPanel panelBoletim = new JPanel();
 		panelBoletim.setLayout(null);
@@ -531,6 +541,19 @@ public class UIPrincipal extends JFrame {
 		lblCurso.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		lblCurso.setBounds(10, 80, 70, 40);
 		panelBoletim.add(lblCurso);
+		
+		//Icones dos Botões
+		btnSalvar.setIcon(new ImageIcon(UIPrincipal.class.getResource("/save.png")));
+		btnDeletar.setIcon(new ImageIcon(UIPrincipal.class.getResource("/apagar.png")));
+		btnBuscar.setIcon(new ImageIcon(UIPrincipal.class.getResource("/buscar.png")));
+		btnAtualizar.setIcon(new ImageIcon(UIPrincipal.class.getResource("/atualizar.png")));
+		btnSair.setIcon(new ImageIcon(UIPrincipal.class.getResource("/sair.png")));
+		
+		btnSalvar2.setIcon(new ImageIcon(UIPrincipal.class.getResource("/save.png")));
+		btnDeletar2.setIcon(new ImageIcon(UIPrincipal.class.getResource("/apagar.png")));
+		btnBuscar2.setIcon(new ImageIcon(UIPrincipal.class.getResource("/buscar.png")));
+		btnAtualizar2.setIcon(new ImageIcon(UIPrincipal.class.getResource("/atualizar.png")));
+		btnSair2.setIcon(new ImageIcon(UIPrincipal.class.getResource("/sair.png")));
 
 	}
 }
