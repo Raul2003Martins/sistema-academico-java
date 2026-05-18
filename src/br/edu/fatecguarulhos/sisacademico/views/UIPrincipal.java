@@ -7,6 +7,13 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
+
+import br.edu.fatecguarulhos.sisacademico.daos.AlunoDAO;
+import br.edu.fatecguarulhos.sisacademico.daos.CursoDAO;
+import br.edu.fatecguarulhos.sisacademico.daos.DisciplinaDAO;
+import br.edu.fatecguarulhos.sisacademico.models.Aluno;
+import br.edu.fatecguarulhos.sisacademico.models.Curso;
+
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -46,7 +53,6 @@ public class UIPrincipal extends JFrame {
 	private JTextField txtMunicipio;
 	private JTextField txtSemestreBoletim;
 	private JTextField txtCelular;
-	private JTextField txtDisciplinaBoletim;
 	private JTextField txtRgm2;
 	private JTextField txtFaltas;
 
@@ -54,7 +60,7 @@ public class UIPrincipal extends JFrame {
 	private JComboBox comboSemestre;
 	private JComboBox comboNota;
 
-	private JButton btnNovo = new JButton("");
+	private JButton btnAtualizar2 = new JButton("");
 	private JButton btnGravar = new JButton("");
 	private JButton btnPesquisar;
 	private JButton btnJava;
@@ -65,6 +71,11 @@ public class UIPrincipal extends JFrame {
 	private JTextField txtCurso2;
 	private JTextField txtNome2;
 	private JTextField txtNota;
+	
+	private AlunoDAO alunoDAO = new AlunoDAO();
+	private CursoDAO cursoDAO = new CursoDAO();
+	private DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
+	private JTextField txtRgmCurso;
 
 	/**
 	 * Launch the application.
@@ -97,14 +108,54 @@ public class UIPrincipal extends JFrame {
 		menuBar.add(mnArquivo);
 		
 		JMenuItem mntmSalvar = new JMenuItem("Salvar");
+		mntmSalvar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					alunoDAO.inserirAluno(new Aluno());
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		mntmSalvar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK | InputEvent.ALT_DOWN_MASK));
 		mnArquivo.add(mntmSalvar);
 		
 		JMenuItem mntmConsultar = new JMenuItem("Consultar");
+		mntmConsultar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					alunoDAO.buscarAluno(new Aluno());
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		mnArquivo.add(mntmConsultar);
 		
 		JMenuItem mntmAlterar = new JMenuItem("Alterar");
+		mntmAlterar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					alunoDAO.atualizarAluno(new Aluno());
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		mnArquivo.add(mntmAlterar);
+		
+		JMenuItem mntmDeletar = new JMenuItem("Deletar");
+		mntmDeletar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					alunoDAO.deletarAluno(new Aluno());
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		mnArquivo.add(mntmDeletar);
+		
 		
 		JSeparator separator = new JSeparator();
 		mnArquivo.add(separator);
@@ -267,188 +318,286 @@ public class UIPrincipal extends JFrame {
 		
 		JLabel lblCampus = new JLabel("Campus:");
 		lblCampus.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		lblCampus.setBounds(10, 80, 94, 40);
+		lblCampus.setBounds(10, 150, 94, 40);
 		panelDadosC.add(lblCampus);
 		
 		JLabel lblPeriodo = new JLabel("Periodo:");
 		lblPeriodo.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		lblPeriodo.setBounds(10, 147, 94, 40);
+		lblPeriodo.setBounds(10, 215, 94, 40);
 		panelDadosC.add(lblPeriodo);
 		
 		JRadioButton rdbtnMatutino_1 = new JRadioButton("Matutino");
 		rdbtnMatutino_1.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		rdbtnMatutino_1.setBounds(105, 146, 115, 40);
+		rdbtnMatutino_1.setBounds(105, 214, 115, 40);
 		panelDadosC.add(rdbtnMatutino_1);
 		
 		JRadioButton rdbtnVespertino_1 = new JRadioButton("Vespertino");
 		rdbtnVespertino_1.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		rdbtnVespertino_1.setBounds(240, 147, 133, 40);
+		rdbtnVespertino_1.setBounds(240, 215, 133, 40);
 		panelDadosC.add(rdbtnVespertino_1);
 		
 		JRadioButton rdbtnNoturno_1 = new JRadioButton("Noturno");
 		rdbtnNoturno_1.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		rdbtnNoturno_1.setBounds(390, 147, 109, 41);
+		rdbtnNoturno_1.setBounds(390, 215, 109, 41);
 		panelDadosC.add(rdbtnNoturno_1);
 		
+		rdbtnMatutino_1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (rdbtnMatutino_1.isSelected()){
+                	rdbtnVespertino_1.setSelected(false);
+                	rdbtnNoturno_1.setSelected(false);
+                }
+            }
+        });
+
+        rdbtnVespertino_1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (rdbtnVespertino_1.isSelected()){
+                	rdbtnMatutino_1.setSelected(false);
+                	rdbtnNoturno_1.setSelected(false);
+                }
+            }
+        });
+
+        rdbtnNoturno_1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (rdbtnNoturno_1.isSelected()){
+                	rdbtnMatutino_1.setSelected(false);
+                	rdbtnVespertino_1.setSelected(false);
+                }
+            }
+        });
+
 		JLabel lblNCurso = new JLabel("Curso:");
 		lblNCurso.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		lblNCurso.setBounds(10, 15, 77, 40);
+		lblNCurso.setBounds(10, 79, 77, 40);
 		panelDadosC.add(lblNCurso);
 		
 		JComboBox comboBoxCurso = new JComboBox();
 		comboBoxCurso.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		comboBoxCurso.setModel(new DefaultComboBoxModel(new String[] {"Análise e Desenvolvimento de Sistemas", "Logística", "Redes de Computadores"}));
-		comboBoxCurso.setBounds(97, 15, 543, 40);
+		comboBoxCurso.setModel(new DefaultComboBoxModel(new String[] {"Análise e Desenvolvimento de Sistemas", "Logística", "Comercio Exterior"}));
+		comboBoxCurso.setBounds(97, 79, 543, 40);
 		panelDadosC.add(comboBoxCurso);
 		
-		JButton btnNovo2 = new JButton("");
-		btnNovo2.addActionListener(new ActionListener() {
+		JButton btnAtualizar = new JButton("");
+		btnAtualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
+					cursoDAO.atualizarCurso(new Curso());
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
-		btnNovo2.setBounds(10, 222, 77, 66);
-		panelDadosC.add(btnNovo2);
-		btnNovo2.setIcon(new ImageIcon(UIPrincipal.class.getResource("/resources/save.png")));
+		btnAtualizar.setBounds(10, 277, 77, 66);
+		panelDadosC.add(btnAtualizar);
+		btnAtualizar.setIcon(new ImageIcon(UIPrincipal.class.getResource("/resources/save.png")));
 		
 		JComboBox comboBoxCampus = new JComboBox();
 		comboBoxCampus.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		comboBoxCampus.setBounds(114, 80, 526, 40);
+		comboBoxCampus.setBounds(114, 150, 526, 40);
 		panelDadosC.add(comboBoxCampus);
 		
 		JButton btnSalvar = new JButton("");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
+					cursoDAO.inserirCurso(new Curso());
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 		btnSalvar.setIcon(new ImageIcon(UIPrincipal.class.getResource("/resources/save.png")));
-		btnSalvar.setBounds(143, 222, 77, 66);
+		btnSalvar.setBounds(143, 277, 77, 66);
 		panelDadosC.add(btnSalvar);
 		
 		JButton btnPesquisar2 = new JButton("");
+		btnPesquisar2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					cursoDAO.buscarCurso(new Curso());
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		btnPesquisar2.setIcon(new ImageIcon(UIPrincipal.class.getResource("/resources/save.png")));
-		btnPesquisar2.setBounds(280, 222, 77, 66);
+		btnPesquisar2.setBounds(278, 277, 77, 66);
 		panelDadosC.add(btnPesquisar2);
 		
-		JButton btnJava2 = new JButton("");
-		btnJava2.setIcon(new ImageIcon(UIPrincipal.class.getResource("/resources/save.png")));
-		btnJava2.setBounds(414, 222, 77, 66);
-		panelDadosC.add(btnJava2);
+		JButton btnDeletar = new JButton("");
+		btnDeletar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					cursoDAO.deletarCurso(new Curso());
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnDeletar.setIcon(new ImageIcon(UIPrincipal.class.getResource("/resources/save.png")));
+		btnDeletar.setBounds(414, 277, 77, 66);
+		panelDadosC.add(btnDeletar);
 		
 		JButton btnSair = new JButton("");
+		btnSair.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//Botão Sair
+				System.exit(0);
+			}
+		});
 		btnSair.setIcon(new ImageIcon(UIPrincipal.class.getResource("/resources/save.png")));
-		btnSair.setBounds(563, 222, 77, 66);
+		btnSair.setBounds(563, 277, 77, 66);
 		panelDadosC.add(btnSair);
+		
+		JLabel lblRgmAluno = new JLabel("RGM Aluno:");
+		lblRgmAluno.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		lblRgmAluno.setBounds(10, 11, 125, 40);
+		panelDadosC.add(lblRgmAluno);
+		
+		txtRgmCurso = new JTextField();
+		txtRgmCurso.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		txtRgmCurso.setColumns(10);
+		txtRgmCurso.setBounds(143, 11, 230, 40);
+		panelDadosC.add(txtRgmCurso);
 		
 		JPanel panelNotaseFalta = new JPanel();
 		tabbedPane.addTab("Notas e Faltas", null, panelNotaseFalta, null);
 		panelNotaseFalta.setLayout(null);
 		
-				JLabel lblRGM = new JLabel("RGM:");
-				lblRGM.setFont(new Font("Tahoma", Font.PLAIN, 23));
-				lblRGM.setBounds(10, 15, 60, 40);
-				panelNotaseFalta.add(lblRGM);
+		JLabel lblRGM = new JLabel("RGM:");
+		lblRGM.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		lblRGM.setBounds(10, 15, 60, 40);
+		panelNotaseFalta.add(lblRGM);
 				
-						txtRgm2 = new JTextField();
-						txtRgm2.setFont(new Font("Tahoma", Font.PLAIN, 23));
-						txtRgm2.setBounds(69, 15, 195, 40);
-						panelNotaseFalta.add(txtRgm2);
+		txtRgm2 = new JTextField();
+		txtRgm2.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		txtRgm2.setBounds(69, 15, 195, 40);
+		panelNotaseFalta.add(txtRgm2);
 						
-								JLabel lblDisciplina = new JLabel("Disciplina:");
-								lblDisciplina.setFont(new Font("Tahoma", Font.PLAIN, 23));
-								lblDisciplina.setBounds(12, 146, 121, 40);
-								panelNotaseFalta.add(lblDisciplina);
+		JLabel lblDisciplina = new JLabel("Disciplina:");
+		lblDisciplina.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		lblDisciplina.setBounds(12, 146, 121, 40);
+		panelNotaseFalta.add(lblDisciplina);
 								
-										JComboBox comboDisciplina = new JComboBox();
-										comboDisciplina.setFont(new Font("Tahoma", Font.PLAIN, 23));
-										
-												comboDisciplina.setModel(
-														new DefaultComboBoxModel(
-																new String[] {
-																		"Programação Orientada a Objetos",
-																		"Banco de Dados",
-																		"Engenharia de Software"
-																}));
-												
-														comboDisciplina.setBounds(128, 146, 490, 40);
-														panelNotaseFalta.add(comboDisciplina);
+		JComboBox<String> comboDisciplina = new JComboBox<>();
+		comboDisciplina.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		comboDisciplina.setBounds(128, 146, 490, 40);
+		panelNotaseFalta.add(comboDisciplina);
+	
+		String[][] disciplinas = {
+
+		    // ADS
+		    {
+		        "Programação Orientada a Objetos",
+		        "Banco de Dados",
+		        "Engenharia de Software",
+		        "Estrutura de Dados",
+		        "Desenvolvimento Web",
+		        "Sistemas Operacionais"
+		    },
+
+		    // Logística
+		    {
+		        "Gestão de Estoque",
+		        "Logística Empresarial",
+		        "Transporte e Distribuição",
+		        "Cadeia de Suprimentos",
+		        "Gestão de Compras",
+		        "Armazenagem"
+		    },
+
+		    // Comércio Exterior
+		    {
+		        "Importação e Exportação",
+		        "Legislação Aduaneira",
+		        "Logística Internacional",
+		        "Negociação Internacional",
+		        "Câmbio",
+		        "Marketing Internacional"
+		    }
+		};
+	
+		comboDisciplina.setModel(
+	    new DefaultComboBoxModel<>(disciplinas[0])
+		);
 														
-														
-																JLabel lblSemestre = new JLabel("Semestre:");
-																lblSemestre.setFont(new Font("Tahoma", Font.PLAIN, 23));
-																lblSemestre.setBounds(10, 215, 110, 40);
-																panelNotaseFalta.add(lblSemestre);
+	JLabel lblSemestre = new JLabel("Semestre:");
+	lblSemestre.setFont(new Font("Tahoma", Font.PLAIN, 23));
+	lblSemestre.setBounds(10, 215, 110, 40);
+	panelNotaseFalta.add(lblSemestre);
 																
-																		JComboBox comboSemestre_1 = new JComboBox();
-																		comboSemestre_1.setFont(new Font("Tahoma", Font.PLAIN, 23));
-																		
-																				comboSemestre_1.setModel(
-																						new DefaultComboBoxModel(
-																								new String[] {
-																										"2026-1",
-																										"2026-2"
-																								}));
-																				
-																						comboSemestre_1.setBounds(115, 215, 100, 40);
-																						panelNotaseFalta.add(comboSemestre_1);
-																						
-																								
-																								JLabel lblNota = new JLabel("Nota:");
-																								lblNota.setFont(new Font("Tahoma", Font.PLAIN, 23));
-																								lblNota.setBounds(267, 215, 60, 40);
-																								panelNotaseFalta.add(lblNota);
+	JComboBox comboSemestre_1 = new JComboBox();
+	comboSemestre_1.setFont(new Font("Tahoma", Font.PLAIN, 23));
+	comboSemestre_1.setModel(new DefaultComboBoxModel(new String[] {
+	"2026-1",
+	"2026-2"
+	}));
+	comboSemestre_1.setBounds(115, 215, 100, 40);
+	panelNotaseFalta.add(comboSemestre_1);
+																															
+	JLabel lblNota = new JLabel("Nota:");
+	lblNota.setFont(new Font("Tahoma", Font.PLAIN, 23));
+	lblNota.setBounds(267, 215, 60, 40);
+	panelNotaseFalta.add(lblNota);
 																										
-																												JLabel lblFaltas = new JLabel("Faltas:");
-																												lblFaltas.setFont(new Font("Tahoma", Font.PLAIN, 23));
-																												lblFaltas.setBounds(478, 215, 70, 40);
-																												panelNotaseFalta.add(lblFaltas);
+	JLabel lblFaltas = new JLabel("Faltas:");
+	lblFaltas.setFont(new Font("Tahoma", Font.PLAIN, 23));
+	lblFaltas.setBounds(478, 215, 70, 40);
+	panelNotaseFalta.add(lblFaltas);
 																												
-																														txtFaltas = new JTextField();
-																														txtFaltas.setHorizontalAlignment(SwingConstants.CENTER);
-																														txtFaltas.setFont(new Font("Tahoma", Font.PLAIN, 23));
-																														txtFaltas.setText("2");
-																														txtFaltas.setBounds(558, 215, 60, 40);
-																														panelNotaseFalta.add(txtFaltas);
-																														
-																																
-																																btnNovo.setBounds(10, 280, 70, 60);
-																																panelNotaseFalta.add(btnNovo);
-																																
+	txtFaltas = new JTextField();
+	txtFaltas.setHorizontalAlignment(SwingConstants.CENTER);
+	txtFaltas.setFont(new Font("Tahoma", Font.PLAIN, 23));
+	txtFaltas.setText("2");
+	txtFaltas.setBounds(558, 215, 60, 40);
+	panelNotaseFalta.add(txtFaltas);
+	
+	btnAtualizar2.setBounds(10, 280, 70, 60);
+	panelNotaseFalta.add(btnAtualizar2);																															
 																																		
-																																		btnGravar.setBounds(140, 280, 70, 60);
-																																		panelNotaseFalta.add(btnGravar);
+	btnGravar.setBounds(140, 280, 70, 60);
+	panelNotaseFalta.add(btnGravar);
 																																		
-																																				JButton btnPesquisar1 = new JButton("");
-																																				btnPesquisar1.setBounds(279, 280, 70, 60);
-																																				panelNotaseFalta.add(btnPesquisar1);
+	JButton btnPesquisar1 = new JButton("");
+	btnPesquisar1.setBounds(279, 280, 70, 60);
+	panelNotaseFalta.add(btnPesquisar1);
 																																				
-																																						JButton btnJava1 = new JButton("");
-																																						btnJava1.addActionListener(new ActionListener() {
-																																							public void actionPerformed(ActionEvent e) {
-																																							}
-																																						});
-																																						btnJava1.setBounds(414, 280, 70, 60);
-																																						panelNotaseFalta.add(btnJava1);
+	JButton btnDeletar2 = new JButton("");
+	btnDeletar2.addActionListener(new ActionListener() {
+	public void actionPerformed(ActionEvent e) {
+	}
+	});
+	btnDeletar2.setBounds(414, 280, 70, 60);
+	panelNotaseFalta.add(btnDeletar2);
 																																						
-																																								JButton btnSair2_1 = new JButton("");
-																																								btnSair2_1.setBounds(548, 280, 70, 60);
-																																								panelNotaseFalta.add(btnSair2_1);
+	JButton btnSair1 = new JButton("");
+	btnSair1.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			//Botão Sair
+			System.exit(0);
+		}
+	});
+	btnSair1.setBounds(548, 280, 70, 60);
+	panelNotaseFalta.add(btnSair1);
 																																								
-																																								txtCurso2 = new JTextField();
-																																								txtCurso2.setEditable(false);
-																																								txtCurso2.setFont(new Font("Tahoma", Font.PLAIN, 23));
-																																								txtCurso2.setBounds(10, 80, 608, 40);
-																																								panelNotaseFalta.add(txtCurso2);
+	txtCurso2 = new JTextField();
+	txtCurso2.setEditable(false);
+	txtCurso2.setFont(new Font("Tahoma", Font.PLAIN, 23));
+	txtCurso2.setBounds(10, 80, 608, 40);
+	panelNotaseFalta.add(txtCurso2);
 																																								
-																																								txtNome2 = new JTextField();
-																																								txtNome2.setEditable(false);
-																																								txtNome2.setFont(new Font("Tahoma", Font.PLAIN, 23));
-																																								txtNome2.setBounds(288, 15, 330, 40);
-																																								panelNotaseFalta.add(txtNome2);
+	txtNome2 = new JTextField();
+	txtNome2.setEditable(false);
+	txtNome2.setFont(new Font("Tahoma", Font.PLAIN, 23));
+	txtNome2.setBounds(288, 15, 330, 40);
+	panelNotaseFalta.add(txtNome2);
 																																								
-																																								txtNota = new JTextField();
-																																								txtNota.setFont(new Font("Tahoma", Font.PLAIN, 23));
-																																								txtNota.setBounds(333, 215, 60, 40);
-																																								panelNotaseFalta.add(txtNota);
+	txtNota = new JTextField();
+	txtNota.setFont(new Font("Tahoma", Font.PLAIN, 23));
+	txtNota.setBounds(333, 215, 60, 40);
+	panelNotaseFalta.add(txtNota);
 		
 		JPanel panelBoletim = new JPanel();
 		panelBoletim.setLayout(null);
@@ -461,18 +610,17 @@ public class UIPrincipal extends JFrame {
 
 		JTextField txtRgmBoletim = new JTextField();
 		txtRgmBoletim.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		txtRgmBoletim.setEditable(false);
-		txtRgmBoletim.setBounds(80, 15, 120, 40);
+		txtRgmBoletim.setBounds(70, 15, 195, 40);
 		panelBoletim.add(txtRgmBoletim);
 		JTextField txtNomeBoletim = new JTextField();
 		txtNomeBoletim.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		txtNomeBoletim.setEditable(false);
-		txtNomeBoletim.setBounds(310, 15, 301, 40);
+		txtNomeBoletim.setBounds(363, 15, 326, 40);
 		panelBoletim.add(txtNomeBoletim);
 		JTextField txtCursoBoletim = new JTextField();
 		txtCursoBoletim.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		txtCursoBoletim.setEditable(false);
-		txtCursoBoletim.setBounds(80, 80, 531, 40);
+		txtCursoBoletim.setBounds(80, 80, 609, 40);
 		panelBoletim.add(txtCursoBoletim);
 
 		JLabel lblDisciplinaBoletim = new JLabel("Disciplina:");
@@ -516,21 +664,20 @@ public class UIPrincipal extends JFrame {
 		txtSemestreBoletim.setBounds(117, 234, 80, 40);
 		panelBoletim.add(txtSemestreBoletim);
 		
-		txtDisciplinaBoletim = new JTextField();
-		txtDisciplinaBoletim.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		txtDisciplinaBoletim.setEditable(false);
-		txtDisciplinaBoletim.setBounds(131, 153, 480, 40);
-		panelBoletim.add(txtDisciplinaBoletim);
-		
 		JLabel lblNome_1 = new JLabel("Nome:");
 		lblNome_1.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		lblNome_1.setBounds(230, 15, 70, 40);
+		lblNome_1.setBounds(283, 15, 70, 40);
 		panelBoletim.add(lblNome_1);
 		
 		JLabel lblCurso = new JLabel("Curso:");
 		lblCurso.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		lblCurso.setBounds(10, 80, 70, 40);
 		panelBoletim.add(lblCurso);
+		
+		JComboBox comboDisciplina2 = new JComboBox();
+		comboDisciplina2.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		comboDisciplina2.setBounds(121, 153, 568, 40);
+		panelBoletim.add(comboDisciplina2);
 
 	}
 }
