@@ -13,6 +13,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import java.awt.event.KeyEvent;
+import java.time.LocalDate;
 import java.awt.event.InputEvent;
 import javax.swing.JSeparator;
 import java.awt.event.ActionListener;
@@ -68,6 +69,7 @@ public class UIPrincipal extends JFrame {
 
 	
 	private JTabbedPane tabbedPane ;
+	private JFormattedTextField txtData;
 	/**
 	 * Launch the application.
 	 */
@@ -104,18 +106,7 @@ public class UIPrincipal extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int selected = tabbedPane.getSelectedIndex();
-				if(selected == 0) {
-					System.out.println("tela pessoal");
-					
-				}
-				if(selected == 1)
-					System.out.println("tela2 curso");
-				if(selected == 2)
-					System.out.println("tela3 falta");
-				if(selected == 3)
-					System.out.println("tela4 boletim");
-			}
+				
 		});
 		mnArquivo.add(mntmSalvar);
 		
@@ -196,7 +187,7 @@ public class UIPrincipal extends JFrame {
 		lblCpf.setBounds(370, 80, 60, 40);
 		panelDadosP.add(lblCpf);
 		
-		JFormattedTextField txtData = new JFormattedTextField(new MaskFormatter(" ##/##/####"));
+		txtData = new JFormattedTextField(new MaskFormatter(" ##/##/####"));
 		txtData.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		txtData.setBounds(240, 80, 98, 40);
 		panelDadosP.add(txtData);
