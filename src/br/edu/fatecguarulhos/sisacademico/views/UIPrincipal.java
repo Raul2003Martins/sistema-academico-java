@@ -60,9 +60,14 @@ public class UIPrincipal extends JFrame {
 	private CursoDAO cursoDAO = new CursoDAO();
 	private DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
 	
+	// para uso na área de cursos
 	private String[][] disciplinas;
-	private void cbGetDisciplinas() {
-		
+	// uso para criar o codigo curso
+	private int idSemestre, idCurso, idDisciplina, idAluno;
+	
+	
+	private String gerarCodigoDisciplina() {
+		return String.valueOf(idCurso) + String.valueOf(idSemestre) + String.valueOf(idDisciplina) + String.valueOf(idAluno);
 	}
 	private String[][] getArrayDisciplinas(String curso) {
 		
@@ -192,12 +197,18 @@ public class UIPrincipal extends JFrame {
             "Inglês VI", "Espanhol V", "Trabalho de Graduação (TG)"
         };
 		
-		if(curso.equals("Comércio Exterior"))
-				return comercioExterior;
-			if(curso.equals("Análise e Desenvolvimento de Sistemas"))
-				return ads;
-			if(curso.equals("Logística"))
+		if(curso.equals("Comércio Exterior")) {
+			idCurso = 10;
+			return comercioExterior;
+		}
+		if(curso.equals("Análise e Desenvolvimento de Sistemas")) {
+			idCurso = 20;
+			return ads;
+		}
+			if(curso.equals("Logística")) {
+				idCurso = 30;
 				return logistica;
+			}
 			return null;
 	}
 	
@@ -206,7 +217,7 @@ public class UIPrincipal extends JFrame {
 			comboDisciplina.removeAllItems();
 			String[] semestreFatiado = semestre.split(" ");
 			int nSemestre = (Integer.parseInt(semestreFatiado[0])) -1;
-	
+			idSemestre = nSemestre + 1;
 			for(int i = 0; i < disciplinasCurso[nSemestre].length; i++) {
 				comboDisciplina.addItem(disciplinasCurso[nSemestre][i]);
 			}
@@ -575,6 +586,7 @@ public class UIPrincipal extends JFrame {
                 } catch (Exception e1) {
                     // TODO Auto-generated catch block
                     e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, e1.getMessage());
                 }
 			}
 		});
@@ -613,6 +625,7 @@ public class UIPrincipal extends JFrame {
                     System.out.println(c.getNome());
                 } catch (Exception excp){
                     System.out.println("Erro -> " + excp.getMessage());
+					JOptionPane.showMessageDialog(null, excp.getMessage());
                 }
 			}
 		});
@@ -643,6 +656,8 @@ public class UIPrincipal extends JFrame {
                     cursoDao.atualizarCurso(c);
                 } catch (Exception e2) {
                     System.out.println("Erro " + e2.getMessage());
+
+					JOptionPane.showMessageDialog(null, e2.getMessage());
                 }
 			}
 		});
@@ -666,6 +681,7 @@ public class UIPrincipal extends JFrame {
                 } catch (Exception e1) {
                     // TODO Auto-generated catch block
                     e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, e1.getMessage());
                 }
 			}
 		});
@@ -785,7 +801,7 @@ public class UIPrincipal extends JFrame {
 							Aluno aluno = alunoDAO.buscarAluno(rgm);
 
 							txtNome2.setText(aluno.getNome());
-
+							idAluno = aluno.getRgm();
 							// BUSCA CURSO
 							Curso curso = cursoDAO.buscarCurso(rgm);
 
@@ -838,14 +854,19 @@ public class UIPrincipal extends JFrame {
 			    public void actionPerformed(ActionEvent e) {
 
 			        try {
-			        	AlunoDAO alunoDao = new AlunoDAO();
-	                    Aluno a = alunoDao.buscarAluno(Integer.parseInt(txtRgmCurso.getText()));
+			        	
+						int rgm = Integer.parseInt(txtRgm2.getText());
+
+						// BUSCA ALUNO
+						Aluno aluno = alunoDAO.buscarAluno(rgm);
+			        	//AlunoDAO alunoDao = new AlunoDAO();
+	                    //Aluno a = alunoDao.buscarAluno(Integer.parseInt(txtRgmCurso.getText()));
 			            Disciplina disciplina = new Disciplina();
 
-			            disciplina.setCodigo(a.getRgm());
+			            disciplina.setCodigo(Integer.valueOf(gerarCodigoDisciplina()));
 			            disciplina.setNome(comboDisciplina.getSelectedItem().toString());
-			            disciplina.setNota(Float.parseFloat(txtNota.getText()));
-			            disciplina.setFaltas(Integer.parseInt(txtFaltas.getText()));
+			            disciplina.setNota(Float.parseFloat(txtNota.getText().toString()));
+			            disciplina.setFaltas(Integer.parseInt(txtFaltas.getText().toString()));
 			            disciplina.setSemestre(comboSemestre_1.getSelectedItem().toString());
 
 			            disciplinaDAO.inserirDisciplina(disciplina);
@@ -870,6 +891,26 @@ public class UIPrincipal extends JFrame {
 		panelNotas.add(btnSalvar2);
 
 		JButton btnAtualizar2 = new JButton("");
+		btnAtualizar2.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				try {
+		            Disciplina disciplina = disciplinaDAO.buscarDisciplina(Integer.valueOf(gerarCodigoDisciplina()));
+
+		            disciplina.setNome(comboDisciplina.getSelectedItem().toString());
+		            disciplina.setNota(Float.parseFloat(txtNota.getText().toString()));
+		            disciplina.setFaltas(Integer.parseInt(txtFaltas.getText().toString()));
+		            disciplina.setSemestre(comboSemestre_1.getSelectedItem().toString());
+
+		            disciplinaDAO.atualizarDisciplina(disciplina);
+		            
+		        } catch (Exception eUpdate) {
+					System.out.println(eUpdate.getMessage());
+					JOptionPane.showMessageDialog(null, "");
+				}
+			}});
 		btnAtualizar2.setIcon(
 				new ImageIcon("E:\\Git\\sistema-academico-java\\src\\resources\\atualizar.png")
 			);
@@ -877,6 +918,31 @@ public class UIPrincipal extends JFrame {
 		panelNotas.add(btnAtualizar2);
 
 		JButton btnExcluir2 = new JButton("");
+		btnExcluir2.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				try {
+
+		            Disciplina disciplina = new Disciplina();
+
+		            disciplina.setCodigo(Integer.valueOf(gerarCodigoDisciplina()));
+		            disciplina.setNome(comboDisciplina.getSelectedItem().toString());
+		            disciplina.setNota(Float.parseFloat(txtNota.getText().toString()));
+		            disciplina.setFaltas(Integer.parseInt(txtFaltas.getText().toString()));
+		            disciplina.setSemestre(comboSemestre_1.getSelectedItem().toString());
+
+		            disciplinaDAO.deletarDisciplina(disciplina);;
+		            
+		            txtNota.setText("");
+		            txtFaltas.setText("");
+				} catch (Exception eExc) {
+					eExc.getStackTrace();
+					JOptionPane.showMessageDialog(null, eExc.getMessage());
+				}
+				
+			}});
 		btnExcluir2.setIcon( 
 				new ImageIcon("E:\\Git\\sistema-academico-java\\src\\resources\\apagar.png")
 				);
@@ -915,9 +981,20 @@ public class UIPrincipal extends JFrame {
 				// TODO Auto-generated method stub
 				System.out.println("Mudou disciplina");
 				try {
-					//Disciplina disciplina = disciplinaDAO.
+					idDisciplina = comboDisciplina.getSelectedIndex();
+					System.out.println(
+							"Id aluno " + idAluno
+							+ "IdCurso " + idCurso
+							+ "idSemestre " + idSemestre
+							+ "id Disciplina " + idDisciplina
+ 							);
+					Disciplina disciplina = disciplinaDAO.buscarDisciplina(Integer.valueOf(gerarCodigoDisciplina()));
+					txtNota.setText(String.valueOf(disciplina.getNota()));
+					txtFaltas.setText(String.valueOf(disciplina.getFaltas()));
 				} catch (Exception e6) {
 					System.out.println("Erro: " + e6.getMessage());
+					txtNota.setText("");
+					txtFaltas.setText("");
 				}
 			}
 			
