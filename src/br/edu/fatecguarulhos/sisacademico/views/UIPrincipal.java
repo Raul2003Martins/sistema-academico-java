@@ -957,7 +957,7 @@ public class UIPrincipal extends JFrame {
 		
 		JButton btnSair2 = new JButton("");
 		btnSair2.setIcon(
-				new ImageIcon("E:\\Git\\sistema-academico-java\\src\\resources\\sair.png")
+				new ImageIcon("src\resources\sair.png")
 			);
 		btnSair2.setBounds(650, 280, 90, 80);
 
@@ -1047,6 +1047,7 @@ public class UIPrincipal extends JFrame {
 
 	        public void actionPerformed(ActionEvent e) {
 	            try {
+	            	textArea.setText("");
 	                int rgm = Integer.parseInt(txtRgmBoletim.getText().toString());
 	                System.out.println("linha1");
 	                DisciplinaDAO dao = new DisciplinaDAO();
