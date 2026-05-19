@@ -2,6 +2,7 @@ package br.edu.fatecguarulhos.sisacademico.models;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
@@ -105,14 +106,20 @@ public class Aluno {
 		this.celular = celular;
 	}
 	public void setDataNascimento(int dia, int mes, int ano) {
+		if(ano < 1900 || ano > LocalDateTime.now().getYear())
+			throw new RuntimeException("Ano digitado é inválido");
 		try {
+		
 		dataNascimento = LocalDate.of(ano, mes, dia);
+		if(dataNascimento.isAfter(LocalDate.now()))
+			throw new RuntimeException("Data digitada é inválida");
 		}
 		catch(DateTimeException dte) {
 			if(dte.getMessage().contains("MonthOfYear"))
 				throw new RuntimeException("Mês digitado é inválido");
 			if(dte.getMessage().contains("DayOfMonth"))
 				throw new RuntimeException("Dia do mês digitado é inválido");
+			
 		}
 		}
 	public String getDataNascimentoFormatada() {
