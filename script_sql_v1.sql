@@ -4,9 +4,10 @@ CREATE TABLE IF NOT EXISTS aluno(
 	rgm INTEGER PRIMARY KEY,
 	nome VARCHAR(50),
 	email VARCHAR(50),
-	cpf VARCHAR(11),
+	cpf VARCHAR(15),
 	endereco VARCHAR(50),
 	municipio VARCHAR(50),
+	data+nasc VARCHAR(50),
 	uf VARCHAR(2),
 	celular VARCHAR(50)
 );

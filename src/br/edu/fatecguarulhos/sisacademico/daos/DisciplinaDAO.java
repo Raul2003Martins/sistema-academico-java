@@ -8,35 +8,48 @@ import br.edu.fatecguarulhos.sisacademico.utils.ConnectionFactory;
 
 public class DisciplinaDAO {
 	public Disciplina buscarDisciplina(Integer codigo) throws Exception {
-		Disciplina disciplina = new Disciplina();
-		String query = "SELECT "
-				+ "nome, faltas, nota, semestre "
-				+ "FROM aluno WHERE codigo = ?";
-		try{
-			Connection connection = ConnectionFactory.getConnection();
-			PreparedStatement pstmt = connection.prepareStatement(query);
-			pstmt.setInt(1, codigo);
-			ResultSet rs = pstmt.executeQuery();
-			if(rs.next()) {
-				disciplina.setCodigo(codigo);
-				disciplina.setNome(rs.getString(1));
-				disciplina.setFaltas(rs.getInt(2));
-				disciplina.setNota(rs.getFloat(3));
-				disciplina.setSemestre(rs.getString(4));
-				
-			}
-			else disciplina = null;
-			connection.close();
-			if(disciplina == null) throw new Exception("Disciplina não encontrada");
-			return disciplina;
-		}
-		catch (SQLException e) {
-			throw e;
-		}
-		catch(Exception e) {
-			throw e;
-		}
-	} 
+
+	    Disciplina disciplina = new Disciplina();
+
+	    String query = "SELECT "
+	            + "nome, faltas, nota, semestre "
+	            + "FROM disciplina WHERE codigo = ?";
+
+	    try {
+
+	        Connection connection = ConnectionFactory.getConnection();
+
+	        PreparedStatement pstmt = connection.prepareStatement(query);
+
+	        pstmt.setInt(1, codigo);
+
+	        ResultSet rs = pstmt.executeQuery();
+
+	        if (rs.next()) {
+
+	            disciplina.setCodigo(codigo);
+	            disciplina.setNome(rs.getString(1));
+	            disciplina.setFaltas(rs.getInt(2));
+	            disciplina.setNota(rs.getFloat(3));
+	            disciplina.setSemestre(rs.getString(4));
+
+	        } else {
+
+	            disciplina = null;
+	        }
+
+	        connection.close();
+
+	        if (disciplina == null)
+	            throw new Exception("Disciplina não encontrada");
+
+	        return disciplina;
+
+	    } catch (SQLException e) {
+
+	        throw e;
+	    }
+	}
 	
 	public int inserirDisciplina(Disciplina disciplina) throws Exception {
 		disciplina.validarDados();
@@ -75,26 +88,81 @@ public class DisciplinaDAO {
 			throw new RuntimeException(e);
 		}
 	}
-	public void atualizarDisciplina(Disciplina disciplina) {
-		disciplina.validarDados();
-		String sql = "UPDATE disciplina SET "
-				+ "nome = ?, faltas = ?, nota = ?, semestre = ?"
-				+ "WHERE codigo = ?";
+	public Disciplina buscarDisciplinaPorNome(String nome)
+			throws Exception {
+
+		Disciplina disciplina = new Disciplina();
+
+		String query =
+				"SELECT codigo, faltas, nota, semestre " +
+				"FROM disciplina WHERE nome = ?";
+
 		try {
-			Connection connection = ConnectionFactory.getConnection();
-			PreparedStatement pstmt = connection.prepareStatement(sql);
-			pstmt.setString(1, disciplina.getNome());
-			pstmt.setInt(2, disciplina.getFaltas());
-			pstmt.setFloat(3, disciplina.getNota());
-			pstmt.setString(4, disciplina.getSemestre());
-			pstmt.setInt(5, disciplina.getCodigo());
-			pstmt.execute();
+
+			Connection connection =
+					ConnectionFactory.getConnection();
+
+			PreparedStatement pstmt =
+					connection.prepareStatement(query);
+
+			pstmt.setString(1, nome);
+
+			ResultSet rs = pstmt.executeQuery();
+
+			if(rs.next()) {
+
+				disciplina.setCodigo(rs.getInt(1));
+				disciplina.setNome(nome);
+				disciplina.setFaltas(rs.getInt(2));
+				disciplina.setNota(rs.getFloat(3));
+				disciplina.setSemestre(rs.getString(4));
+
+			}
+			else {
+				disciplina = null;
+			}
+
 			connection.close();
+
+			if(disciplina == null)
+				throw new Exception("Disciplina não encontrada");
+
+			return disciplina;
+
 		}
-		catch(Exception e) {
-			
+		catch(SQLException e) {
+			throw e;
 		}
 	}
 	
-	}
+	public void atualizarDisciplina(Disciplina disciplina) {
 
+	    disciplina.validarDados();
+
+	    String sql = "UPDATE disciplina SET "
+	            + "nome = ?, faltas = ?, nota = ?, semestre = ? "
+	            + "WHERE codigo = ?";
+
+	    try {
+
+	        Connection connection = ConnectionFactory.getConnection();
+
+	        PreparedStatement pstmt = connection.prepareStatement(sql);
+
+	        pstmt.setString(1, disciplina.getNome());
+	        pstmt.setInt(2, disciplina.getFaltas());
+	        pstmt.setFloat(3, disciplina.getNota());
+	        pstmt.setString(4, disciplina.getSemestre());
+	        pstmt.setInt(5, disciplina.getCodigo());
+
+	        pstmt.execute();
+
+	        connection.close();
+
+	    } catch (Exception e) {
+
+	        throw new RuntimeException(e);
+	    }
+	}
+	
+	}
