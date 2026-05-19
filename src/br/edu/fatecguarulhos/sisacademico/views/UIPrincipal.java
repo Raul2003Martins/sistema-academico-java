@@ -60,67 +60,158 @@ public class UIPrincipal extends JFrame {
 	private CursoDAO cursoDAO = new CursoDAO();
 	private DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
 	
-	private String[] getArrayDisciplinas(String curso) {
-		String[] AnaliseEDesenvolvimentoDeSistemas = {
-			    "Algoritmos e Lógica de Programação",
-			    "Arquitetura e Organização de Computadores",
-			    "Banco de Dados",
-			    "Engenharia de Software",
-			    "Estrutura de Dados",
-			    "Linguagem de Programação",
-			    "Matemática Discreta",
-			    "Programação Orientada a Objetos",
-			    "Sistemas Operacionais",
-			    "Desenvolvimento Web",
-			    "Desenvolvimento Mobile",
-			    "Redes de Computadores",
-			    "Segurança da Informação",
-			    "Engenharia de Requisitos",
-			    "Interação Humano Computador",
-			    "Gestão de Projetos",
-			    "Inteligência Artificial",
-			    "Computação em Nuvem",
-			    "Qualidade de Software",
-			    "Empreendedorismo"
-			};
+	private String[][] disciplinas;
+	private void cbGetDisciplinas() {
+		
+	}
+	private String[][] getArrayDisciplinas(String curso) {
+		
+		// =========================================================================
+        // 1. ANÁLISE E DESENVOLVIMENTO DE SISTEMAS (ADS) - 6 Semestres
+        // =========================================================================
+        String[][] ads = new String[6][];
+        
+        // 1º Semestre (7 matérias)
+        ads[0] = new String[]{
+            "Algoritmos e Lógica de Programação", "Modelagem de Banco de Dados", 
+            "Estruturas de Computadores", "Fundamentos da Rede de Computadores", 
+            "Comunicação e Expressão", "Inglês I", "Matemática Discreta"
+        };
+        // 2º Semestre (7 matérias)
+        ads[1] = new String[]{
+            "Engenharia de Software I", "Linguagem de Programação", 
+            "Sistemas Operacionais", "Contabilidade", 
+            "Inglês II", "Cálculo", "Metodologia da Pesquisa Científico-Tecnológica"
+        };
+        // 3º Semestre (7 matérias)
+        ads[2] = new String[]{
+            "Engenharia de Software II", "Estrutura de Dados", 
+            "Sistemas de Informação", "Programação Linear", 
+            "Inglês III", "Estatística Aplicada", "Sociedade e Tecnologia"
+        };
+        // 4º Semestre (7 matérias)
+        ads[3] = new String[]{
+            "Engenharia de Software III", "Programação Orientada a Objetos", 
+            "Banco de Dados", "Redes de Computadores", 
+            "Inglês IV", "Metodologia de Projetos", "Administração Geral"
+        };
+        // 5º Semestre (6 matérias)
+        ads[4] = new String[]{
+            "Programação para Web", "Segurança da Informação", 
+            "Laboratório de Engenharia de Software", "Sistemas Distribuídos", 
+            "Inglês V", "Economia e Finanças"
+        };
+        // 6º Semestre (6 matérias)
+        ads[5] = new String[]{
+            "Gestão de Projetos de Software", "Inteligência Artificial", 
+            "Tópicos Especiais em Informática", "Inglês VI", 
+            "Ética e Responsabilidade Profissional", "Trabalho de Graduação (TG)"
+        };
 
-			String[] Logistica = {
-			    "Gestão da Cadeia de Suprimentos",
-			    "Armazenagem e Movimentação",
-			    "Logística Internacional",
-			    "Gestão de Transportes",
-			    "Planejamento Logístico",
-			    "Custos Logísticos",
-			    "Gestão de Estoques",
-			    "Pesquisa Operacional",
-			    "Distribuição Física",
-			    "Administração Geral",
-			    "Matemática Financeira",
-			    "Empreendedorismo"
-			};
 
-			String[] ComercioExterior = {
-			    "Importação",
-			    "Exportação",
-			    "Logística Internacional",
-			    "Legislação Aduaneira",
-			    "Economia Internacional",
-			    "Marketing Internacional",
-			    "Câmbio",
-			    "Negociação Internacional",
-			    "Gestão Portuária",
-			    "Direito Internacional",
-			    "Administração Geral",
-			    "Empreendedorismo"
-			};
-			if(curso.equals("Comércio Exterior"))
-				return ComercioExterior;
+        // =========================================================================
+        // 2. LOGÍSTICA - 6 Semestres
+        // =========================================================================
+        String[][] logistica = new String[6][];
+        
+        // 1º Semestre (7 matérias)
+        logistica[0] = new String[]{
+            "Fundamentos de Logística", "Administração Geral", 
+            "Contabilidade Geral e Custos", "Matemática Financeira", 
+            "Comunicação e Expressão", "Inglês I", "Informática Aplicada"
+        };
+        // 2º Semestre (7 matérias)
+        logistica[1] = new String[]{
+            "Gestão de Transportes", "Gestão de Suprimentos", 
+            "Estatística Aplicada", "Economia", 
+            "Inglês II", "Metodologia da Pesquisa Científico-Tecnológica", "Direito Aplicado aos Negócios"
+        };
+        // 3º Semestre (7 matérias)
+        logistica[2] = new String[]{
+            "Logística de Armazenagem e Distribuição", "Gestão de Operações de Serviços", 
+            "Planejamento, Programação e Controle da Produção (PPCP)", "Custos Logísticos", 
+            "Inglês III", "Comportamento Organizacional", "Sistemas de Informação Gerencial"
+        };
+        // 4º Semestre (6 matérias)
+        logistica[3] = new String[]{
+            "Logística Internacional", "Gestão de Frotas e Roteirização", 
+            "Pesquisa Operacional Aplicada", "Inglês IV", 
+            "Gestão Ambiental e Sustentabilidade", "Gestão da Qualidade"
+        };
+        // 5º Semestre (6 matérias)
+        logistica[4] = new String[]{
+            "Estratégia e Planejamento Logístico", "Cadeia de Suprimentos (Supply Chain)", 
+            "Logística Reversa", "Inglês V", 
+            "Empreendedorismo", "Gerenciamento de Riscos e Seguros"
+        };
+        // 6º Semestre (5 matérias)
+        logistica[5] = new String[]{
+            "Tópicos Avançados em Logística", "Negociação Internacional", 
+            "Inglês VI", "Ética e Cidadania", "Trabalho de Graduação (TG)"
+        };
+
+
+        // =========================================================================
+        // 3. COMÉRCIO EXTERIOR - 6 Semestres
+        // =========================================================================
+        String[][] comercioExterior = new String[6][];
+        
+        // 1º Semestre (7 matérias)
+        comercioExterior[0] = new String[]{
+            "Introdução ao Comércio Exterior", "Teoria do Comércio Internacional", 
+            "Geografia Econômica e Geopolítica", "Instituições de Direito Público e Privado", 
+            "Comunicação e Expressão", "Inglês I", "Matemática Elementar"
+        };
+        // 2º Semestre (7 matérias)
+        comercioExterior[1] = new String[]{
+            "Sistemática de Exportação", "Logística Internacional", 
+            "Contabilidade e Análise de Balanços", "Microeconomia", 
+            "Inglês II", "Espanhol I", "Estatística Aplicada"
+        };
+        // 3º Semestre (7 matérias)
+        comercioExterior[2] = new String[]{
+            "Sistemática de Importação", "Direito do Comércio Internacional", 
+            "Macroeconomia", "Cálculo de Preços no Comércio Exterior", 
+            "Inglês III", "Espanhol II", "Metodologia da Pesquisa"
+        };
+        // 4º Semestre (7 matérias)
+        comercioExterior[3] = new String[]{
+            "Contratos e Financiamento Internacional", "Câmbio e Operações Financeiras", 
+            "Marketing Internacional", "Sistemas de Informação em Comércio Exterior", 
+            "Inglês IV", "Espanhol III", "Gestão de Custos e Preços"
+        };
+        // 5º Semestre (6 matérias)
+        comercioExterior[4] = new String[]{
+            "Acordos Internacionais e Blocos Econômicos", "Negociação Comercial Internacional", 
+            "Gestão de Transportes e Seguros", "Inglês V", 
+            "Espanhol IV", "Ética e Legislação Aduaneira"
+        };
+        // 6º Semestre (5 matérias)
+        comercioExterior[5] = new String[]{
+            "Planejamento Estratégico Internacional", "Tópicos Especiais de Comércio Exterior", 
+            "Inglês VI", "Espanhol V", "Trabalho de Graduação (TG)"
+        };
+		
+		if(curso.equals("Comércio Exterior"))
+				return comercioExterior;
 			if(curso.equals("Análise e Desenvolvimento de Sistemas"))
-				return AnaliseEDesenvolvimentoDeSistemas;
+				return ads;
 			if(curso.equals("Logística"))
-				return Logistica;
+				return logistica;
 			return null;
 	}
+	
+	public void carregarDisciplinasSemestre(String semestre, String[][] disciplinasCurso,
+	        JComboBox<String> comboDisciplina) {
+			comboDisciplina.removeAllItems();
+			String[] semestreFatiado = semestre.split(" ");
+			int nSemestre = (Integer.parseInt(semestreFatiado[0])) -1;
+	
+			for(int i = 0; i < disciplinasCurso[nSemestre].length; i++) {
+				comboDisciplina.addItem(disciplinasCurso[nSemestre][i]);
+			}
+	}
+	
 	
 	private void carregarDisciplinas(String curso,
 	        JComboBox<String> comboDisciplina) {
@@ -631,8 +722,12 @@ public class UIPrincipal extends JFrame {
 		JComboBox<String> comboSemestre_1 = new JComboBox<>();
 		comboSemestre_1.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		comboSemestre_1.setModel(new DefaultComboBoxModel<>(new String[] {
-		    "2026-1",
-		    "2026-2"
+		    "1 Semestre",
+		    "2 Semestre",
+		    "3 Semestre",
+		    "4 Semestre",
+		    "5 Semestre",
+		    "6 Semestre",
 		}));
 		comboSemestre_1.setBounds(130, 215, 120, 40);
 		panelNotas.add(comboSemestre_1);
@@ -679,8 +774,8 @@ public class UIPrincipal extends JFrame {
 		JButton btnBuscar2 = new JButton("");
 		btnBuscar2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				btnBuscar2.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
+	//			btnBuscar2.addActionListener(new ActionListener() {
+//					public void actionPerformed(ActionEvent e) {
 
 						try {
 
@@ -697,17 +792,15 @@ public class UIPrincipal extends JFrame {
 							txtCurso2.setText(curso.getNome());
 
 							// CARREGA DISCIPLINAS DO CURSO
-							carregarDisciplinas(curso.getNome(), comboDisciplina);
+							disciplinas = getArrayDisciplinas(curso.getNome());
+							carregarDisciplinasSemestre(comboSemestre_1.getSelectedItem().toString(), disciplinas, comboDisciplina);
+							//System.out.println(disciplinas[0][1]);
+							//carregarDisciplinas(curso.getNome(), comboDisciplina);
 
 							// PEGA DISCIPLINA SELECIONADA
 							String nomeDisciplina = comboDisciplina.getSelectedItem().toString();
-/*							// codigo da disciplina vai ser o seguinte
- * 							// primeiro digito: id do curso
- * 							// segundo digito: semestre
- * 							// 3 digito: id da materia
- * 							// resto seria id aluno
- * 								// ex: ads é id 1, aluno id 567, as materias do 3 semestre seriam 13X567
- * 
+/*							
+ 
 							Disciplina disciplina = disciplinaDAO.buscarDisciplinaPorNome(nomeDisciplina);
 
 							// PREENCHE CAMPOS
@@ -731,8 +824,8 @@ public class UIPrincipal extends JFrame {
 					}
 				});
 				
-			}
-		});
+//			}
+//		});
 		btnBuscar2.setIcon(
 				new ImageIcon("E:\\Git\\sistema-academico-java\\src\\resources\\buscar.png")
 			);
@@ -804,6 +897,31 @@ public class UIPrincipal extends JFrame {
 
 		panelNotas.add(btnSair2);
 		
+		// acçoes na seleção das combobox
+		comboSemestre_1.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				//System.out.println("Mudou semestre");
+				carregarDisciplinasSemestre(comboSemestre_1.getSelectedItem().toString(), disciplinas, comboDisciplina);
+			}
+			
+		});
+		comboDisciplina.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println("Mudou disciplina");
+				try {
+					//Disciplina disciplina = disciplinaDAO.
+				} catch (Exception e6) {
+					System.out.println("Erro: " + e6.getMessage());
+				}
+			}
+			
+		});
 		//==========================
 		// BOLETIM
 		//==========================
