@@ -103,6 +103,7 @@ public class Disciplina {
 	public void validarDados() {
 		if(nome.isBlank() || nome == null) 
 			throw new RuntimeException("Nome não pode estar vazio");
+		
 
 	}
 }
