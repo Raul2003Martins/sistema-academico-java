@@ -215,5 +215,18 @@ public class DisciplinaDAO {
             throw e;
         }
     }
+		public void deleteCascade(Integer rgm) {
+
+			String sql = "DELETE FROM disciplina WHERE rgm_aluno = ?";
+			try {
+				Connection connection = ConnectionFactory.getConnection();
+				PreparedStatement pstmt = connection.prepareStatement(sql);
+				pstmt.setInt(1, rgm);
+				pstmt.execute();
+				connection.close();	
+				}
+			catch(Exception e) {
+				throw new RuntimeException(e);
+			}		}
 	
 	}

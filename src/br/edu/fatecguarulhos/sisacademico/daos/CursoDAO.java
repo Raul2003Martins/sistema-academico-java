@@ -128,5 +128,20 @@ public class CursoDAO {
 
 		}
 	}
+	
+	public void deletarCascade(int id) {
+
+		String sql = "DELETE FROM curso WHERE codigo = ?";
+		try {
+			Connection connection = ConnectionFactory.getConnection();
+			PreparedStatement pstmt = connection.prepareStatement(sql);
+			pstmt.setInt(1, id);
+			pstmt.execute();
+			connection.close();	
+			}
+		catch(Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 
 }

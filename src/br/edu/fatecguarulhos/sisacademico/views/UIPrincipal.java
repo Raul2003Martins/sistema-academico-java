@@ -681,6 +681,9 @@ public class UIPrincipal extends JFrame {
                     rbNoturno.setSelected(false);
                     rbMatutino.setSelected(false);
                     rbVespertino.setSelected(false);
+
+                    disciplinaDAO.deleteCascade(c.getCodigo());
+					cursoDAO.deletarCascade(c.getCodigo());
                 } catch (Exception e1) {
                     // TODO Auto-generated catch block
                     e1.printStackTrace();
@@ -1167,8 +1170,9 @@ public class UIPrincipal extends JFrame {
 
 					aluno.setRgm(Integer.parseInt(txtRgm.getText()));
 
+					disciplinaDAO.deleteCascade(aluno.getRgm());
+					cursoDAO.deletarCascade(aluno.getRgm());
 					alunoDAO.deletarAluno(aluno);
-
 					JOptionPane.showMessageDialog(null, "Aluno deletado com sucesso!");
 				} catch (Exception e1) {
 					e1.printStackTrace();
