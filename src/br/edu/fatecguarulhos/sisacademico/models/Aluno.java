@@ -1,5 +1,6 @@
 package br.edu.fatecguarulhos.sisacademico.models;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -104,8 +105,16 @@ public class Aluno {
 		this.celular = celular;
 	}
 	public void setDataNascimento(int dia, int mes, int ano) {
+		try {
 		dataNascimento = LocalDate.of(ano, mes, dia);
-	}
+		}
+		catch(DateTimeException dte) {
+			if(dte.getMessage().contains("MonthOfYear"))
+				throw new RuntimeException("Mês digitado é inválido");
+			if(dte.getMessage().contains("DayOfMonth"))
+				throw new RuntimeException("Dia do mês digitado é inválido");
+		}
+		}
 	public String getDataNascimentoFormatada() {
 		DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	    return dataNascimento.format(formato);

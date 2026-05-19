@@ -75,10 +75,11 @@ public class CursoDAO {
 
 			return valoresInseridos;
 
-		} catch (SQLException e) {
-
-			throw e;
-
+		}		
+		catch (SQLException e) {
+			if(e.getErrorCode() == 1062 && e.getMessage().contains(String.valueOf(curso.getCodigo())))
+				throw new Exception("Curso com este código já cadastrado.");
+			else throw e;
 		}
 	}
 
