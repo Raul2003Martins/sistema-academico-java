@@ -849,14 +849,19 @@ public class UIPrincipal extends JFrame {
 			    public void actionPerformed(ActionEvent e) {
 
 			        try {
-			        	AlunoDAO alunoDao = new AlunoDAO();
-	                    Aluno a = alunoDao.buscarAluno(Integer.parseInt(txtRgmCurso.getText()));
+			        	
+						int rgm = Integer.parseInt(txtRgm2.getText());
+
+						// BUSCA ALUNO
+						Aluno aluno = alunoDAO.buscarAluno(rgm);
+			        	//AlunoDAO alunoDao = new AlunoDAO();
+	                    //Aluno a = alunoDao.buscarAluno(Integer.parseInt(txtRgmCurso.getText()));
 			            Disciplina disciplina = new Disciplina();
 
-			            disciplina.setCodigo(a.getRgm());
+			            disciplina.setCodigo(Integer.valueOf(gerarCodigoDisciplina()));
 			            disciplina.setNome(comboDisciplina.getSelectedItem().toString());
-			            disciplina.setNota(Float.parseFloat(txtNota.getText()));
-			            disciplina.setFaltas(Integer.parseInt(txtFaltas.getText()));
+			            disciplina.setNota(Float.parseFloat(txtNota.getText().toString()));
+			            disciplina.setFaltas(Integer.parseInt(txtFaltas.getText().toString()));
 			            disciplina.setSemestre(comboSemestre_1.getSelectedItem().toString());
 
 			            disciplinaDAO.inserirDisciplina(disciplina);
@@ -933,10 +938,13 @@ public class UIPrincipal extends JFrame {
 							+ "idSemestre " + idSemestre
 							+ "id Disciplina " + idDisciplina
  							);
-					
 					Disciplina disciplina = disciplinaDAO.buscarDisciplina(Integer.valueOf(gerarCodigoDisciplina()));
+					txtNota.setText(String.valueOf(disciplina.getNota()));
+					txtFaltas.setText(String.valueOf(disciplina.getFaltas()));
 				} catch (Exception e6) {
 					System.out.println("Erro: " + e6.getMessage());
+					txtNota.setText("");
+					txtFaltas.setText("");
 				}
 			}
 			
