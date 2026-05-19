@@ -1,6 +1,7 @@
 package br.edu.fatecguarulhos.sisacademico.models;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class Aluno {
@@ -15,6 +16,7 @@ public class Aluno {
 	private String uf;
 	private String celular;
 	private LocalDate dataNascimento;
+	private Curso curso;
 	//Construtor
 	public Aluno() {}
 	
@@ -27,6 +29,14 @@ public class Aluno {
 		this.municipio = municipio;
 		this.uf = uf;
 		this.celular = celular;
+	}
+
+	public Curso getCurso() {
+		return curso;
+	}
+
+	public void setCurso(Curso curso) {
+		this.curso = curso;
 	}
 
 	//Getters e Setters
@@ -97,19 +107,26 @@ public class Aluno {
 		dataNascimento = LocalDate.of(ano, mes, dia);
 	}
 	public String getDataNascimentoFormatada() {
-		return "";
+		DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	    return dataNascimento.format(formato);
 	}
 	public LocalDate getDataNascimento() {
 		return dataNascimento;
 	}
+	
+	public void setDataNascimento(String data) {
+	    DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	    dataNascimento = LocalDate.parse(data, formato);
+	}
+	
 	public void validarDados() {
-		if(nome.isBlank() || nome == null) 
-			throw new RuntimeException("Nome não pode estar vazio");
+	    if(nome == null || nome.isBlank())
+	        throw new RuntimeException("Nome não pode estar vazio");
 
-		if(email.isBlank() || email == null) 
-			throw new RuntimeException("Email não pode estar vazio");
+	    if(email == null || email.isBlank())
+	        throw new RuntimeException("Email não pode estar vazio");
 
-		if(cpf.isBlank() || cpf == null) 
-			throw new RuntimeException("CPF não pode estar vazio");
+	    if(cpf == null || cpf.isBlank())
+	        throw new RuntimeException("CPF não pode estar vazio");
 	}
 }

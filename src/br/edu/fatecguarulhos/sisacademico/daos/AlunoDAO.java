@@ -9,15 +9,17 @@ import br.edu.fatecguarulhos.sisacademico.models.Aluno;
 import br.edu.fatecguarulhos.sisacademico.utils.ConnectionFactory;
 
 public class AlunoDAO {
+	
 	public Aluno buscarAluno(Aluno aluno) throws Exception{
 		return buscarAluno(aluno.getRgm());
 	}
 	public Aluno buscarAluno(Integer RGM) throws Exception{
 		Aluno aluno = new Aluno();
 		String query = "SELECT "
-				+ "nome, cpf, email, endereco, municipio, uf, celular "
+				+ "nome, cpf, email, endereco, municipio, uf, celular, data_nasc "
 				+ "FROM aluno WHERE rgm = ?";
 		try{
+			
 			Connection connection = ConnectionFactory.getConnection();
 			PreparedStatement pstmt = connection.prepareStatement(query);
 			pstmt.setInt(1, RGM);
@@ -31,6 +33,7 @@ public class AlunoDAO {
 				aluno.setMunicipio(rs.getString(5));
 				aluno.setUf(rs.getString(6));
 				aluno.setCelular(rs.getString(7));
+				aluno.setDataNascimento(rs.getString(8));
 			}
 			else aluno = null;
 			connection.close();
@@ -45,8 +48,8 @@ public class AlunoDAO {
 	public int inserirAluno(Aluno aluno) throws Exception {
 		aluno.validarDados();
 		String sql = "INSERT INTO aluno "
-				+ "(rgm, nome, email, cpf, endereco, municipio, uf, celular) "
-				+ "VALUES (?,?,?,?,?,?,?,?)";
+				+ "(rgm, nome, email, cpf, endereco, municipio, uf, celular, data_nasc) "
+				+ "VALUES (?,?,?,?,?,?,?,?,?)";
 		try{
 			Connection connection = ConnectionFactory.getConnection();
 			PreparedStatement pstmt = connection.prepareStatement(sql);
@@ -58,6 +61,7 @@ public class AlunoDAO {
 			pstmt.setString(6, aluno.getMunicipio());
 			pstmt.setString(7, aluno.getUf());
 			pstmt.setString(8, aluno.getCelular());
+			pstmt.setString(9, aluno.getDataNascimentoFormatada());
 			int valoresInseridos = pstmt.executeUpdate();
 			connection.close();
 			return valoresInseridos;
@@ -87,7 +91,7 @@ public class AlunoDAO {
 	public void atualizarAluno(Aluno aluno) {
 		aluno.validarDados();
 		String sql = "UPDATE aluno SET "
-				+ "nome = ?, email = ?, cpf = ?, endereco = ?, municipio = ?, uf = ?, celular = ?"
+				+ "nome = ?, email = ?, cpf = ?, endereco = ?, municipio = ?, uf = ?, celular = ?, data_nasc = ? "
 				+ "WHERE rgm = ?";
 		try {
 			Connection connection = ConnectionFactory.getConnection();
@@ -99,7 +103,8 @@ public class AlunoDAO {
 			pstmt.setString(5, aluno.getMunicipio());
 			pstmt.setString(6, aluno.getUf());
 			pstmt.setString(7, aluno.getCelular());
-			pstmt.setInt(8, aluno.getRgm());
+			pstmt.setString(8, aluno.getDataNascimentoFormatada());
+			pstmt.setInt(9, aluno.getRgm());
 			pstmt.execute();
 			connection.close();
 		}
